@@ -36,11 +36,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Analyse possible dimension of tiled font data')
     parser.add_argument('dimension', type=int, help='Dimension of the tile (square)')
     parser.add_argument('infile', help='Input raw bitmap font data')
-    parser.add_argument('-o', '--output',
-            default='entropy.csv', dest='outfile',
+    parser.add_argument('-o', '--outfile',
+            default='entropy.csv',
             help='Output result to (default entropy.csv)')
     parser.add_argument('-b', '--bits',
-            type=int, default=4, dest='bits',
+            type=int, default=4,
             help='Bits per pixel in 4, 8, 16 and 32 (default 4)')
 
     args = parser.parse_args()
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     filesz = path.getsize(args.infile)
     dimension = args.dimension
 
-    if filesz % dimension:
+    if filesz % (dimension * (args.bits / 8.0)):
         print >>stderr, "Given width of tile does not compromise filesize"
         exit(-1)
 
@@ -101,11 +101,11 @@ if __name__ == '__main__':
 
     print >>stderr, "Calculating entropy for each dimension..."
 
-    SOLUTION_MAX=len(sequence) / dimension
+    SOLUTION_MAX = len(sequence) / dimension
 
     for i in xrange(1, SOLUTION_MAX):
         print >>outfile, '%d, %d' % (i, entropy(sequence, i))
-        print >>stderr, '%d/%d solution tested\r' % (i, SOLUTION_MAX),
+        print >>stderr, '%d/%d solution tested\r' % (i, SOLUTION_MAX - 1),
         if not i % 30:
             outfile.flush()
 
