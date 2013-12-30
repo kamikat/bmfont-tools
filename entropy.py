@@ -105,4 +105,7 @@ if __name__ == '__main__':
 
     for i in xrange(1, SOLUTION_MAX):
         print >>outfile, '%d, %d' % (i, entropy(sequence, i))
+        print >>stderr, '%d/%d solution tested\r' % (i, SOLUTION_MAX),
+        if not i % 30:
+            outfile.flush()
 
