@@ -101,6 +101,8 @@ if __name__ == '__main__':
 
     print >>stderr, "Calculating entropy for each dimension..."
 
-    for i in xrange(1, len(data) / dimension):
-        print >>outfile, '%d, %d' % (i, entropy(data, i))
+    SOLUTION_MAX=len(sequence) / dimension
+
+    for i in xrange(1, SOLUTION_MAX):
+        print >>outfile, '%d, %d' % (i, entropy(sequence, i))
 
